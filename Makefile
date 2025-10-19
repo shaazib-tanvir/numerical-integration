@@ -1,3 +1,6 @@
+OPTIMIZED=-O3
+DEBUG_MODE=
+
 all: debug/numerical-integration
 release: release/numerical-integration
 
@@ -11,13 +14,13 @@ debug/integrator.o: src/integrator.cpp
 	clang++ -Wall -Werror --std=c++11 -pedantic -I include/ -c -g -o debug/integrator.o src/integrator.cpp
 
 release/numerical-integration: release/main.o
-	clang++ -Wall -Werror --std=c++11 -pedantic -O3 release/main.o -o release/numerical-integration
+	clang++ -Wall -Werror --std=c++11 -pedantic $(OPTIMIZED) $(DEBUG_MODE) release/main.o -o release/numerical-integration
 
 release/main.o: src/main.cpp include/integrator.hpp
-	clang++ -Wall -Werror --std=c++11 -pedantic -I include/ -c -O3 -o release/main.o src/main.cpp
+	clang++ -Wall -Werror --std=c++11 -pedantic -I include/ -c $(OPTIMIZED) $(DEBUG_MODE) -o release/main.o src/main.cpp
 
 release/integrator.o: src/integrator.cpp
-	clang++ -Wall -Werror --std=c++11 -pedantic -I include/ -c -O3 -o release/integrator.o src/integrator.cpp
+	clang++ -Wall -Werror --std=c++11 -pedantic -I include/ -c $(OPTIMIZED) -o release/integrator.o src/integrator.cpp
 
 clean:
 	rm -f debug/* release/*
